@@ -47,7 +47,7 @@ if($login->check_login()){
 }
 else{
     $objView = new global_view($strAction); 
-    $objView->getCabecera("Chocolatería",false);
+    $objView->getCabecera("Farmacias Lux",false);
     
     include_once("modulos/login/login_view.php");
     
