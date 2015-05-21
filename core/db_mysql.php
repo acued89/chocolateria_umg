@@ -5,7 +5,7 @@ class db_mysql {
     private $servidor = "127.0.0.1";
     private $dataBase = "db_wildsoft";
     private $usuario = "root";
-    private $psswd = "homeland";
+    private $psswd = "argentum";
 
     private $link;
     private $stmt;
