@@ -1,7 +1,7 @@
 <?php
 require_once("modulos/inventario/inventario_view.php");
 
-class inventario_marcas_view extends inventario_view{
+class inventario_tipos_view extends inventario_view{
     static $_instance;
     private $objView;
     
@@ -29,14 +29,15 @@ class inventario_marcas_view extends inventario_view{
             var myWidget = new drawWidgets();
             function nuevo(){
                 $(":input").val("").attr("checked","").show();
-                $("#frm_marcas_name")
+                $("#frm_tipos_name")
                         .data({
                             "isNew":1,
                             "id":0
                         });
             }
             function grabar(){
-                var objMarca = $("#frm_marcas_name");
+                var objMarca = $("#frm_tipos_name");
+                var objDescription = $("#frm_tipos_description");
                 
                 if(objMarca.val() !== ""){
                     var isnew = objMarca.data("isNew");
@@ -48,7 +49,9 @@ class inventario_marcas_view extends inventario_view{
                     
                     var params = {
                         id: objMarca.data("id")+" ",
-                        data: objMarca.val()
+                        name: objMarca.val(),
+                        description: objDescription.val()
+                        
                     };                                        
                     
                     link += serializeObj(params);
@@ -56,16 +59,16 @@ class inventario_marcas_view extends inventario_view{
                     $.get(link,function(data){
                         if(isnew){
                             if(data.NewResult === "true"){
-                                myWidget.alertDialog("Marca agregada exitosamente");
+                                myWidget.alertDialog("Tipo agregada exitosamente");
                             }
                             else{
-                                myWidget.alertDialog("La marca ya ha sido registrada, intente ingresando una nueva marca");
+                                myWidget.alertDialog("El tipo ya ha sido registrada, intente ingresando un nuevo tipo");
                             }
                             
                         }
                         else{
                             if(data.UpdateResult === "true"){
-                                myWidget.alertDialog("La marca fue actualizada");
+                                myWidget.alertDialog("El tipo fue actualizada");
                             }
                             else{
                                 myWidget.alertDialog(data.UpdateResult);
@@ -82,8 +85,9 @@ class inventario_marcas_view extends inventario_view{
             }
             function eliminar(){
                 var link = "<?php print $this->getStrAction(); ?>&op=delete"
-                var objMarca = $("#frm_marcas_name");
+                var objMarca = $("#frm_tipos_name");
                 if(objMarca.val() !== ""){
+                    console.log(objMarca.data("id"))
                     var params = {
                         id: objMarca.data("id")+" ",
                         data: objMarca.val()
@@ -91,7 +95,7 @@ class inventario_marcas_view extends inventario_view{
                     link += serializeObj(params);
                     $.get(link,function(data){
                         if(data.DeleteResult === "true"){
-                            myWidget.alertDialog("Marca eliminada");
+                            myWidget.alertDialog("Tipo eliminado");
                         }
                         else{
                             myWidget.alertDialog("No se puede eliminar el registro")
@@ -103,7 +107,7 @@ class inventario_marcas_view extends inventario_view{
                     }); 
                 }
                 else{
-                    myWidget.alertDialog("Seleccione una marca para poder eliminarla")
+                    myWidget.alertDialog("Seleccione un tipo para poder eliminarla")
                 }
                 
             }
@@ -112,7 +116,8 @@ class inventario_marcas_view extends inventario_view{
                 objDiv.dialog("close");
             }
             function buscar(){
-                $("#divglobal_load").dialog({
+                var divLoad = $("#divglobal_load");
+                divLoad.dialog({
                     autoOpen:false,
                     show: "blind",
                     hide:"blind",
@@ -120,6 +125,8 @@ class inventario_marcas_view extends inventario_view{
                     closeOnEscape: false,
                     resizable: true,
                     draggable : true,
+                    width: 800,
+                    height: 410,
                     maxHeight: 725,
                     position: { my: "center middle", at: "center middle", of: window },
                     close: function(){
@@ -136,7 +143,7 @@ class inventario_marcas_view extends inventario_view{
                 $.get(link,function(data){
                     myWidget.openLoading();
                 })
-                .done(function(data){                                        
+                .done(function(data){
                     myWidget.closeLoading();
                     table = $("<table width='100%'></table>")
                             .addClass("table table-striped table-bordered table-hover dataTable no-footer");
@@ -156,14 +163,14 @@ class inventario_marcas_view extends inventario_view{
                         if(value.IsActive == true){
                             var tr = $("<tr></tr>");
                             var td = $("<td></td>")
-                                    .html(value.IdTradeMark)
+                                    .html(value.IdType);
                             tr.append(td);
                             var td = $("<td></td>")
-                                    .html(value.Name)
+                                    .html(value.Name + " - " + value.Description);
                             tr.append(td);
                             var td = $("<td></td>")
-                                    .html(value.IsActive)
-                            
+                                    .html(value.IsActive);
+
                             tr.append(td)
                                 .addClass(classtd)
                                 .css({"cursor":"pointer"})
@@ -171,13 +178,13 @@ class inventario_marcas_view extends inventario_view{
                                     seleccionar(value);
                                     CloseSearch($("#divglobal_load"));
                                 });
-                                
+
                             table.append(tr);
                             classtd = (classtd == "gradeA odd")?"gradeA even":"gradeA odd";
                         }
                     });
-                    $("#divglobal_load").html(table);
-                    $("#divglobal_load").dialog("open");
+                    divLoad.html(table);
+                    divLoad.dialog("open");
                 })
                 .fail(function() {
                     myWidget.alertDialog("Ha ocurrido un error, por favor intentelo de nuevo")
@@ -185,15 +192,17 @@ class inventario_marcas_view extends inventario_view{
             }
             
             function seleccionar(data){
-                $("#frm_marcas_name").val(data.Name);
-                $("#frm_marcas_name").data({
+                console.log(data)
+                $("#frm_tipos_name").val(data.Name);
+                $("#frm_tipos_name").data({
                     "isNew":0,
-                    "id" : data.IdTradeMark
+                    "id" : data.IdType
                 });
+                $("#frm_tipos_description").val(data.Description);
             }
             
             $(function(){
-                $("#frm_marcas_name")
+                $("#frm_tipos_name")
                 .data({
                     "isNew":1,
                     "id":0
@@ -211,16 +220,20 @@ class inventario_marcas_view extends inventario_view{
     }
    
     public function drawContenido(){
-        $this->initForm("frm_marcas");
+        $this->initForm("frm_tipos");
         ?>
-        <div id="content-marcas">
+        <div id="content-tipos">
             <div class="panel panel-primary">
-                <div class="panel-heading">Marcas</div>
+                <div class="panel-heading">Tipos (Productos)</div>
                 <div class="panel-body">
                     <div class="col-lg-6">
                         <div class="form-group">
                             <label>Nombre</label>
-                            <input class="form-control" size="30" name="frm_marcas_name" id="frm_marcas_name">
+                            <input class="form-control" size="30" name="frm_tipos_name" id="frm_tipos_name">
+                        </div>
+                        <div class="form-group">
+                            <label>Descripción</label>
+                            <input class="form-control" size="30" name="frm_tipos_description" id="frm_tipos_description">
                         </div>
                     </div>                                        
                 </div>

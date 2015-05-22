@@ -1,6 +1,6 @@
 <?php
 require_once("modulos/usuario/usuario_model.php");
-require_once("modulos/usuario/windows/usuario_registro/usuario_registro_controler.php");
+require_once("modulos/usuario/windows/usuario_registro/usuario_registro_controller.php");
 require_once("modulos/usuario/windows/usuario_registro/usuario_registro_view.php");
 
 class usuario_registro_model extends usuario_model {

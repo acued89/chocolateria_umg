@@ -160,7 +160,7 @@ class global_view{
                     ?>
                 </div>          
                 <div id="divglobal_load" style="display:none; background-color: white; color: black;">&nbsp;</div>
-                <div style="height: 20px;width: 100%"></div>
+                <div style="height: 50px;width: 100%"></div>
                 <div id="contentPage" class="Content"> 
                 
         <?php
@@ -213,18 +213,21 @@ class global_view{
         <link rel="stylesheet" type="text/css" href="librarys/js/mb/menu/jq.mb.menu.css" >-->
         <script type="text/javascript" src="librarys/js/library.js"></script>
         <script type="text/javascript">
+            var globalWidget = new drawWidgets();
             function fntGetPage(strLink){
                 $.ajax({
                     type:   "GET",
                     url :   '<?php print $this->getStrAction(); ?>?act=lnk&' +strLink,
                     beforeSend: function(){
                         if($(".ui-dialog").length) $(".ui-dialog").remove();
+                        globalWidget.openLoading();
                     },
                     success: function (data){
+                        globalWidget.closeLoading();
                         $("#contentPage").html(data);
                     },
                     error: function(){
-
+                        globalWidget.closeLoading();
                     }
                 });
             }
@@ -393,33 +396,46 @@ class menu{
     }
     
     function admin_navigation(){
-        ?>
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav">
-                <?php 
-                foreach($this->arrLinks AS $value){
-                    ?>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <span class="glyphicon glyphicon-list-alt"></span><?php print $value["modulo"];  ?> <b class="caret"></b>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <?php                             
-                                foreach($value["detalle"] AS $link){
-                                    ?>
-                                    <li><a style="cursor:pointer;" onclick="fntGetPage('<?php print $link["link"] ?>')"><?php print $link["name"]; ?></a></li> 
-                                    <?php   
-                                }                                
-                            ?>                            
-                        </ul>
-                    </li>
-                
-                    <?php
-                    unset($value);
-                }
-                ?>  
-            </ul>    
-        </div>
+        ?>       
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                      <span class="sr-only">Toggle navigation</span>
+                      <span class="icon-bar"></span>
+                      <span class="icon-bar"></span>
+                      <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">Menú</a>
+                </div>                
+                <div style="height: 1px;" aria-expanded="false" id="navbar" class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <?php 
+                        foreach($this->arrLinks AS $value){
+                            ?>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    <span class="glyphicon glyphicon-list-alt"></span><?php print $value["modulo"];  ?> <b class="caret"></b>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <?php                             
+                                        foreach($value["detalle"] AS $link){
+                                            ?>
+                                            <li><a style="cursor:pointer;" onclick="fntGetPage('<?php print $link["link"] ?>')"><?php print $link["name"]; ?></a></li> 
+                                            <?php   
+                                        }                                
+                                    ?>                            
+                                </ul>
+                            </li>
+
+                            <?php
+                            unset($value);
+                        }
+                        ?>  
+                    </ul>    
+                </div>
+            </div>
+        </nav>
         <?php
     }
     

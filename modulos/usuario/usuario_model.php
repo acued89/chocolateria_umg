@@ -1,5 +1,5 @@
 <?php
-require_once 'core/global_controler.php';
+require_once 'core/global_controller.php';
 require_once 'core/global_model.php';
 
 class usuario_model extends global_model{
