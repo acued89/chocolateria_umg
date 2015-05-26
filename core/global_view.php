@@ -198,6 +198,7 @@ class global_view{
         <link type="text/css" rel="stylesheet" href="vistas/css/menu.css" />
         <link type="text/css" rel="stylesheet" href="vistas/css/estilos.css" />
         <link type="text/css" rel="stylesheet" href="vistas/css/form.css" />
+        <link type="text/css" rel="stylesheet" href="vistas/fonts/font-awesome/css/font-awesome.min.css"/>
         <script type="text/javascript" src="librarys/js/jquery.js"></script>
         <!--<script type="text/javascript" src="librarys/js/spritely/jq.spritely.js"></script>-->
         <script type="text/javascript" src="librarys/js/ui/jquery.ui.js"></script>

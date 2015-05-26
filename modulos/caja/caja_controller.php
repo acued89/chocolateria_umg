@@ -1,9 +1,7 @@
 <?php
-require_once 'core/global_controller.php';
-require_once 'core/global_view.php';
 require_once 'core/global_model.php';
 
-class pedido_controller extends global_controller{
+class caja_controller extends global_controller{
     static $_instance;
     
     function __construct($strAction) {
