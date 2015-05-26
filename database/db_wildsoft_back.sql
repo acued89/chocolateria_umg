@@ -8,8 +8,8 @@ INSERT INTO menu_categoria (id,nombre,imagen) VALUES (3,'Facturación','images/co
 INSERT INTO menu (menu_id,page,nombre,modulo,image,categoria_id) VALUES (2,'usuario_registro','Administracion de usuarios','usuario','images/codepo8.png',1);
 INSERT INTO menu (menu_id,page,nombre,modulo,image,categoria_id) VALUES (4,'usuario_reporte','Reporte de usuarios','usuario','images/leftjust.png',1);
 INSERT INTO menu (menu_id,page,nombre,modulo,image,categoria_id) VALUES (8,'inventario_marcas','Marcas','inventario','',2);
-INSERT INTO menu (menu_id,page,nombre,modulo,image,categoria_id) VALUES (8,'inventario_tipos','Tipos','inventario','',2);
-INSERT INTO menu (menu_id,page,nombre,modulo,image,categoria_id) VALUES (8,'inventario_productos','Productos','inventario','',2);
+INSERT INTO menu (menu_id,page,nombre,modulo,image,categoria_id) VALUES (9,'inventario_tipos','Tipos','inventario','',2);
+INSERT INTO menu (menu_id,page,nombre,modulo,image,categoria_id) VALUES (10,'inventario_productos','Productos','inventario','',2);
 
 
 INSERT INTO usuario (userid, nickname, password, tipo, nombreCompleto, nombres, apellidos, fecha_registro, hora, active) VALUES
