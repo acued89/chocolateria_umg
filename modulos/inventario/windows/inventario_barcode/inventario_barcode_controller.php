@@ -1,14 +1,14 @@
 <?php
 
 require_once("modulos/inventario/inventario_controller.php");
-require_once("modulos/inventario/windows/inventario_marcas/inventario_marcas_view.php");
+require_once("modulos/inventario/windows/inventario_barcode/inventario_barcode_view.php");
 
 
-class inventario_marcas_controller extends inventario_controller{
+class inventario_barcode_controller extends inventario_controller{
     static $_instance;
     public function __construct($strAction = "") {
         parent::__construct($strAction);
-        $this->objView = inventario_marcas_view::getInstance($strAction);
+        $this->objView = inventario_barcode_view::getInstance($strAction);
     }
     private function __clone() { }
 
@@ -21,25 +21,26 @@ class inventario_marcas_controller extends inventario_controller{
     public function getOperacion(){
         $arrReturn  = false;
         $op = $this->checkParam("op");
-        $data = $this->checkParam("data");
+        $name = $this->checkParam("name");
         $id = $this->checkParam("id");
+        $description = $this->checkParam("description");
         /*Los servicios de dba no son rest como tal, ya que no utilizan los metodos post, put or delete.
          * Sin embargo podemos llegar a ellos por medio de un get en forma global
         */
         if($op == "new"){
-            $link = "http://umgsk8ertux.azurewebsites.net/Services/TradeMarks.svc/New/{$data}";
+            $link = "http://umgsk8ertux.azurewebsites.net/Services/Types.svc/New/$name/{$description}";
             $exec = RestClient::get($link); 
         }
         else if($op =="update"){
-            $link = "http://umgsk8ertux.azurewebsites.net/Services/TradeMarks.svc/Update/{$id}/{$data}";
+            $link = "http://umgsk8ertux.azurewebsites.net/Services/TradeMarks.svc/Update/{$id}/{$name}/{$description}";
             $exec = RestClient::get($link); 
         }
         elseif($op == "delete"){
-            $link = "http://umgsk8ertux.azurewebsites.net/Services/TradeMarks.svc/Delete/{$id}";
+            $link = "http://umgsk8ertux.azurewebsites.net/Services/Types.svc/Delete/{$id}";
             $exec = RestClient::get($link);
         }
         else{
-            $link = "http://umgsk8ertux.azurewebsites.net/Services/TradeMarks.svc/Get/json/0/null";
+            $link = "http://umgsk8ertux.azurewebsites.net/Services/Types.svc/Get/json/0/null";
             $exec = RestClient::get($link);
         }
         

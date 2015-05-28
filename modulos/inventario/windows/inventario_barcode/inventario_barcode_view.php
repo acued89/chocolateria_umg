@@ -1,7 +1,7 @@
 <?php
 require_once("modulos/inventario/inventario_view.php");
 
-class inventario_tipos_view extends inventario_view{
+class inventario_barcode_view extends inventario_view{
     static $_instance;
     private $objView;
     
