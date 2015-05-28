@@ -28,11 +28,11 @@ class inventario_tipos_controller extends inventario_controller{
          * Sin embargo podemos llegar a ellos por medio de un get en forma global
         */
         if($op == "new"){
-            $link = "http://umgsk8ertux.azurewebsites.net/Services/Types.svc/New/$name/{$description}";
+            $link = "http://umgsk8ertux.azurewebsites.net/Services/Types.svc/New/{$name}/{$description}";
             $exec = RestClient::get($link); 
         }
         else if($op =="update"){
-            $link = "http://umgsk8ertux.azurewebsites.net/Services/TradeMarks.svc/Update/{$id}/{$name}/{$description}";
+            $link = "http://umgsk8ertux.azurewebsites.net/Services/Types.svc/Update/{$id}/{$name}/{$description}";
             $exec = RestClient::get($link); 
         }
         elseif($op == "delete"){

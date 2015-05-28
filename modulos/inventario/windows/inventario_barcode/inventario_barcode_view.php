@@ -36,8 +36,9 @@ class inventario_barcode_view extends inventario_view{
                         });
             }
             function grabar(){
-                var objMarca = $("#frm_tipos_name");
-                var objDescription = $("#frm_tipos_description");
+                var objMarca = $("#frm_tipos_barcode");
+                var objDescription = $("#frm_tipos_peso");
+                var objUrl = $("#frm_tipos_url");
                 
                 if(objMarca.val() !== ""){
                     var isnew = objMarca.data("isNew");
@@ -49,8 +50,9 @@ class inventario_barcode_view extends inventario_view{
                     
                     var params = {
                         id: objMarca.data("id")+" ",
-                        name: objMarca.val(),
-                        description: objDescription.val()
+                        barcode: objMarca.val(),
+                        url: objUrl.val(),
+                        peso: objDescription.val()
                         
                     };                                        
                     
@@ -224,16 +226,20 @@ class inventario_barcode_view extends inventario_view{
         ?>
         <div id="content-tipos">
             <div class="panel panel-primary">
-                <div class="panel-heading">Tipos (Productos)</div>
+                <div class="panel-heading">Size Wight Barcode</div>
                 <div class="panel-body">
                     <div class="col-lg-6">
                         <div class="form-group">
-                            <label>Nombre</label>
-                            <input class="form-control" size="30" name="frm_tipos_name" id="frm_tipos_name">
+                            <label>Codigo de Barras</label>
+                            <input class="form-control" size="30" name="frm_tipos_barcode" id="frm_tipos_barcode">
                         </div>
                         <div class="form-group">
-                            <label>Descripción</label>
-                            <input class="form-control" size="30" name="frm_tipos_description" id="frm_tipos_description">
+                            <label>Peso</label>
+                            <input class="form-control" size="30" name="frm_tipos_peso" id="frm_tipos_peso">
+                        </div>
+                        <div class="form-group">
+                            <label>URL</label>
+                            <input class="form-control" size="30" name="frm_tipos_url" id="frm_tipos_url">
                         </div>
                     </div>                                        
                 </div>

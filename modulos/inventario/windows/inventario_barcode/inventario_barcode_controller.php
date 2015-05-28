@@ -21,6 +21,12 @@ class inventario_barcode_controller extends inventario_controller{
     public function getOperacion(){
         $arrReturn  = false;
         $op = $this->checkParam("op");
+        /*Parametros de Daniel */
+        $barcode = $this->checkParam("barcode");
+       
+        $peso = $this->checkParam("peso");
+        $url = $this->checkParam("url");
+        /* fin de parametros */
         $name = $this->checkParam("name");
         $id = $this->checkParam("id");
         $description = $this->checkParam("description");
@@ -28,19 +34,19 @@ class inventario_barcode_controller extends inventario_controller{
          * Sin embargo podemos llegar a ellos por medio de un get en forma global
         */
         if($op == "new"){
-            $link = "http://umgsk8ertux.azurewebsites.net/Services/Types.svc/New/$name/{$description}";
+            $link = "http://umgsk8ertux.azurewebsites.net/Services/SizeWightBarcode.svc/New/{$barcode}/{$id}/{$peso}/{$url}";
             $exec = RestClient::get($link); 
         }
         else if($op =="update"){
-            $link = "http://umgsk8ertux.azurewebsites.net/Services/TradeMarks.svc/Update/{$id}/{$name}/{$description}";
+            $link = "http://umgsk8ertux.azurewebsites.net/Services/SizeWightBarcode.svc/Update/{$id}/{$name}/{$description}";
             $exec = RestClient::get($link); 
         }
         elseif($op == "delete"){
-            $link = "http://umgsk8ertux.azurewebsites.net/Services/Types.svc/Delete/{$id}";
+            $link = "http://umgsk8ertux.azurewebsites.net/Services/SizeWightBarcode.svc/Delete/{$id}";
             $exec = RestClient::get($link);
         }
         else{
-            $link = "http://umgsk8ertux.azurewebsites.net/Services/Types.svc/Get/json/0/null";
+            $link = "http://umgsk8ertux.azurewebsites.net/Services/SizeWightBarcode.svc/Get/json/0/null";
             $exec = RestClient::get($link);
         }
         
