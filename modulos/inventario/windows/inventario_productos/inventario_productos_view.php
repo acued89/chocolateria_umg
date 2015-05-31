@@ -103,7 +103,7 @@ class inventario_productos_view extends inventario_view{
                     }); 
                 }
                 else{
-                    myWidget.alertDialog("Seleccione una marca para poder eliminarla")
+                    myWidget.alertDialog("Seleccione un producto para poder eliminarla")
                 }
                 
             }
@@ -213,14 +213,14 @@ class inventario_productos_view extends inventario_view{
     public function drawContenido(){
         $this->initForm("frm_productos");
         ?>
-        <div id="content-marcas">
+        <div id="content-productos">
             <div class="panel panel-primary">
                 <div class="panel-heading">Productos</div>
                 <div class="panel-body">
                     <div class="col-lg-6">
                         <div class="form-group">
                             <label>Nombre</label>
-                            <input class="form-control" size="30" name="frm_productos_name" id="frm_marcas_name">
+                            <input class="form-control" size="30" name="frm_productos_name" id="frm_productos_name">
                         </div>
                     </div>                                        
                 </div>

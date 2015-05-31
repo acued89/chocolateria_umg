@@ -4,11 +4,11 @@ require_once("modulos/inventario/inventario_controller.php");
 require_once("modulos/inventario/windows/inventario_productos/inventario_productos_view.php");
 
 
-class inventario_marcas_controller extends inventario_controller{
+class inventario_productos_controller extends inventario_controller{
     static $_instance;
     public function __construct($strAction = "") {
         parent::__construct($strAction);
-        $this->objView = inventario_marcas_view::getInstance($strAction);
+        $this->objView = inventario_productos_view::getInstance($strAction);
     }
     private function __clone() { }
 
