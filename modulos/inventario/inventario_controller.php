@@ -19,4 +19,4 @@ class inventario_controller extends global_controller{
         }
         return self::$_instance;
     }
-}
+        }

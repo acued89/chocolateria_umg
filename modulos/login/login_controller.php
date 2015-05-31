@@ -7,4 +7,4 @@ class login_controller extends global_controller{
     function __construct($strAction) {
         parent::__construct($strAction);
     }
-}
+        }

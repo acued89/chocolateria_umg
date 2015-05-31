@@ -15,69 +15,68 @@ class login_model extends global_model{
         $strSesionid = session_id();
         $_SESSION["wild"] = array();
         $_SESSION["wild"]["uid"] = 0;
-        $_SESSION["wild"]["name"] = "";
-        $_SESSION["wild"]["pswd"] = "";
-        $_SESSION["wild"]["logged"] = false;
+        $_SESSION["wild"]["CountryName"] = "";
+        $_SESSION["wild"]["IdCountry"] = "";
+        $_SESSION["wild"]["IdRole"] = "";
+        $_SESSION["wild"]["RoleName"] = "";
+        $_SESSION["wild"]["UserName"] = "";
+        $_SESSION["wild"]["Password"] = "";
+        $_SESSION["wild"]["tipo"] = "";
         $_SESSION["wild"]["tipo"] = "*PUBLIC*";
     }
 
-    function llenar_session($intUsuario){
-        $boolReturn = false;
-        $intUsuario = intval($intUsuario);
-        $strQuery = "SELECT Auser.userid,Auser.nickname,Auser.password,Auser.tipo
-         FROM usuario Auser
-         WHERE userid= {$intUsuario} "; 
-        $stmt = $this->sql_ejecutar($strQuery);
-        $resp = $this->sql_fetch_assoc($stmt);       
+    function llenar_session($strUser,$strPassword ){
         
-        if($this->sql_num_rows($stmt) > 0){
-            $_SESSION["wild"]["uid"] = $intUsuario;
-            $_SESSION["wild"]["name"] = $resp["nickname"];
-            $_SESSION["wild"]["pswd"] = $resp["password"];
-            $_SESSION["wild"]["logged"] = true;
-            $_SESSION["wild"]["tipo"] = $resp["tipo"];
-            
-            $boolReturn = true;
-        }    
-        return $boolReturn;
+        $jsonObject = json_decode(file_get_contents("http://umgsk8ertux.azurewebsites.net/Services/Credentials.svc/UserInformation/json/".$strUser."/".$strPassword));
+        $array = get_object_vars($jsonObject);
+        $_SESSION["wild"]["CountryName"] = $array['CountryName'];
+        $_SESSION["wild"]["IdCountry"] = $array['IdCountry'];
+        $_SESSION["wild"]["IdRole"] = $array['IdRole'];
+        $_SESSION["wild"]["RoleName"] = $array['RoleName'];
+        $_SESSION["wild"]["UserName"] = $strUser;
+        $_SESSION["wild"]["Password"] = $strPassword;
+        $_SESSION["wild"]["tipo"] = "admin";
+        $_SESSION["wild"]["logged"] = true;
+        $_SESSION["wild"]["uid"] = 1;
+        $jsonObject = json_decode(file_get_contents("http://umgsk8ertux.azurewebsites.net/Services/Credentials.svc/Permissions/json/".$strUser."/".$strPassword));
+        $array = get_object_vars($jsonObject);
+        $_SESSION["wild"]["permisos"] = $array;
+        
+        return true;
+        
+    }
+    
+    function llamarServicioWeb($pStrModoConexion, $pStrUser, $pStrPassword){
+        
+        if ($pStrModoConexion == "validate"){
+            $jsonObject = json_decode(file_get_contents("http://umgsk8ertux.azurewebsites.net/Services/Credentials.svc/Validate/json/".$pStrUser."/".$pStrPassword));
+        }else if ($pStrModoConexion == "information"){
+            $jsonObject = json_decode(file_get_contents("http://umgsk8ertux.azurewebsites.net/Services/Credentials.svc/UserInformation/json/".$pStrUser."/".$pStrPassword));
+        }else if ($pStrModoConexion == "permissions"){
+            $jsonObject = json_decode(file_get_contents("http://umgsk8ertux.azurewebsites.net/Services/Credentials.svc/Permissions/json/".$pStrUser."/".$pStrPassword));
+        }
+        return $jsonObject;
     }
 	
     function login($strUser, $strPassword, $intUid = false){
         $strSesionid = session_id();
-        
         $strUser = strtolower(trim($strUser));
         if(!preg_match("/^[a-z]+$/",$strUser)){
             return false;
         }
-        
         $boolSetSession = false;
-        if($intUid === false){
-            $strPassword = md5($strPassword);
-            $sql = $this->sql_ejecutarKey("SELECT  * FROM usuario Auser 
-                                        WHERE   nickname = '{$strUser}' AND 
-                                                password = '{$strPassword}' AND 
-                                                active = 'Y'");
+        $jsonObject = json_decode(file_get_contents("http://umgsk8ertux.azurewebsites.net/Services/Credentials.svc/Validate/json/".$strUser."/".$strPassword));
+        $array = get_object_vars($jsonObject);
+        $isAutenticated = $array['ValidateJsonResult'];
+        
+        if ($isAutenticated){
             $boolSetSession = true;
-        }
-        else{
-            if(!preg_match("/^[0-9]+$/",$intUid)){
-                $intUid = 0;
-            }
-            $strPassword = $this->sql_real_escape_string($strPassword);
-            $sql = $this->sql_ejecutarKey("SELECT * FROM usuario Auser
-                                        WHERE   nickname = '{$strUser}' AND 
-                                                password = '{$strPassword}' AND 
-                                                active = 'Y'");
-        }
-
-        if($sql){
-            if($boolSetSession){
-                $this->llenar_session($sql["userid"]);
-            }
+            $this->llenar_session($strUser,$strPassword);
             return true;
+        }else{
+            $this->LogOut();
+            return false;
         }
-        $this->LogOut();
-        return FALSE;       
     }
     
     public function LogOut(){
@@ -88,7 +87,7 @@ class login_model extends global_model{
     
     public function check_login(){
         if(isset($_SESSION["wild"])){
-            if ($this->login($_SESSION["wild"]["name"],$_SESSION["wild"]["pswd"],$_SESSION["wild"]["uid"])) {
+            if ($this->login($_SESSION["wild"]["UserName"],$_SESSION["wild"]["Password"],$_SESSION["wild"]["uid"])) {
                 return true;
             }            
         }

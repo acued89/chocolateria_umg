@@ -138,7 +138,7 @@ class global_view{
                         ?>
                         <div class="pageLogin" onclick="<?php print ($boolLogged)?"showOptionsUser();":"";?>">
                             <div class="optionsUser">
-                                <label><?php print (isset($_SESSION["wild"]["name"]))?$_SESSION["wild"]["name"]:""; ?></label>                
+                                <label><?php print (isset($_SESSION["wild"]["UserName"]))?$_SESSION["wild"]["UserName"]:""; ?></label>                
                             </div>
                             <div class="photoUser">                    
                                 <img src="<?php print $strSRC; ?>" title="Opciones" class="circular">
