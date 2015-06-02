@@ -35,11 +35,10 @@ class inventario_bodegas_view extends inventario_view{
                             "id":0
                         });
             }
-           
-             function grabar(){
+            function grabar(){
                 var objBodega = $("#frm_bodegas_name");
                 var objIdbranch = $("#frm_bodegas_idbranch");
-                var objLocation = $("$frm_bodegas_location");
+                var objLocation = $("#frm_bodegas_location");
                 
                 if(objBodega.val() !== ""){
                     var isnew = objBodega.data("isNew");
@@ -51,10 +50,9 @@ class inventario_bodegas_view extends inventario_view{
                     
                     var params = {
                         id: objBodega.data("id")+" ",
-                        name: objBodega.val(),
                         idbranch: objIdbranch.val(),
-                        location: objLocation.val()
-                        
+                        name: objBodega.val(),
+                        location: objLocation.val()      
                     };                                        
                     
                     link += serializeObj(params);
@@ -65,7 +63,7 @@ class inventario_bodegas_view extends inventario_view{
                                 myWidget.alertDialog("Bodega agregada exitosamente");
                             }
                             else{
-                                myWidget.alertDialog("La bodega ya ha sido registrada, intente ingresando una nueva bodega");
+                                myWidget.alertDialog("La bodega ya ha sido registrada, intente ingresando un nuevo tipo");
                             }
                             
                         }
@@ -86,8 +84,6 @@ class inventario_bodegas_view extends inventario_view{
                     myWidget.alertDialog("Ingrese un texto para guardar información")
                 }
             }
-           
-           
             function eliminar(){
                 var link = "<?php print $this->getStrAction(); ?>&op=delete"
                 var objBodega = $("#frm_bodegas_name");
@@ -95,12 +91,12 @@ class inventario_bodegas_view extends inventario_view{
                     console.log(objBodega.data("id"))
                     var params = {
                         id: objBodega.data("id")+" ",
-                        name: objBodega.val()
+                        data: objBodega.val()
                     };
                     link += serializeObj(params);
                     $.get(link,function(data){
                         if(data.DeleteResult === "true"){
-                            myWidget.alertDialog("Bodega eliminada");
+                            myWidget.alertDialog("Bodega eliminado");
                         }
                         else{
                             myWidget.alertDialog("No se puede eliminar el registro")
@@ -220,7 +216,7 @@ class inventario_bodegas_view extends inventario_view{
             }
             
             $(function(){
-                $("#frm_bodegas_name")
+                $("#frm_bodegas_nombre")
                 .data({
                     "isNew":1,
                     "id":0
@@ -246,14 +242,12 @@ class inventario_bodegas_view extends inventario_view{
                 <div class="panel-body">
                     <div class="col-lg-6">
                         <div class="form-group">
-                            <label>Nombre Bodega</label>
-                            <input class="form-control" size="30" name="frm_bodegas_name" id="frm_bodegas_name">
-                            
-                        </div>
-                        <div class="form-group">
                             <label>Id Sucursal</label>
                             <input class="form-control" size="30" name="frm_bodegas_idbranch" id="frm_bodegas_idbranch">
-                            
+                        </div>
+                        <div class="form-group">
+                            <label>Nombre Bodega</label>
+                            <input class="form-control" size="30" name="frm_bodegas_name" id="frm_bodegas_name">
                         </div>
                         <div class="form-group">
                             <label>Ubicacion</label>
