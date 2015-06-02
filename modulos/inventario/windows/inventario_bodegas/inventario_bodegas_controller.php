@@ -20,17 +20,23 @@ class inventario_bodegas_controller extends inventario_controller{
     public function getOperacion(){
         $arrReturn  = false;
         $op = $this->checkParam("op");
-        $data = $this->checkParam("data");
+        //$data = $this->checkParam("data");
         $id = $this->checkParam("id");
+        $idbranch = $this->checkParam("idbranch");
+        $name = $this->checkParam("name");
+        $location = $this->checkParam("location");
+        
+     
+        
         /*Los servicios de dba no son rest como tal, ya que no utilizan los metodos post, put or delete.
          * Sin embargo podemos llegar a ellos por medio de un get en forma global
         */
         if($op == "new"){
-            $link = "http://umgsk8ertux.azurewebsites.net/Services/WareHouses.svc/New/{$data}";
+            $link = "http://umgsk8ertux.azurewebsites.net/Services/WareHouses.svc/New/{$idbranch}/{$name}/{$location}";
             $exec = RestClient::get($link); 
         }
         else if($op =="update"){
-            $link = "http://umgsk8ertux.azurewebsites.net/Services/WareHouses.svc/Update/{$id}/{$data}";
+            $link = "http://umgsk8ertux.azurewebsites.net/Services/WareHouses.svc/Update/{$id}/{$idbranch}/{$name}/{$location}";
             $exec = RestClient::get($link); 
         }
         elseif($op == "delete"){
