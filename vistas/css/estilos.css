@@ -1067,8 +1067,8 @@ b{
     position: fixed !important;
     z-index: 99;
     top: 0;
-    background: rgba(255, 255, 255, 0) linear-gradient(to bottom, #F3B92F 0%, #EFEFEF 100%) repeat scroll 0% 0%;
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fff', endColorstr='#F2F2F2',GradientType=0 );
+    background: rgba(255, 255, 255, 0) linear-gradient(to bottom, #435490 0%, #EFEFEF 100%) repeat scroll 0% 0%;
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fff', endColorstr='#F2F2F2',GradientType=0 );    
 }
 .centerContent{
     margin-left: auto;
