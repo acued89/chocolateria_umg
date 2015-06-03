@@ -39,7 +39,7 @@ class inventario_bodegas_view extends inventario_view{
              function grabar(){
                 var objBodega = $("#frm_bodegas_name");
                 var objIdbranch = $("#frm_bodegas_idbranch");
-                var objLocation = $("$frm_bodegas_location");
+                var objLocation = $("#frm_bodegas_location");
                 
                 if(objBodega.val() !== ""){
                     var isnew = objBodega.data("isNew");
