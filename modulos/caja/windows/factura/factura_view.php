@@ -230,6 +230,14 @@ class factura_view extends caja_view {
                         $(this).html("");
                     },
                     buttons: {
+                        "Agregar": function(){
+                            var param = {
+                                "cantidad":$("#txtCantidad").val(),
+                                "precio":$("#hddnprecio").val(),
+                                "barcode": $("#hddnbarcode").val()
+                            }
+                            appendItem(param);
+                        },
                         "Cancelar": function () {
                             CloseSearch($(this));
                         }
@@ -255,8 +263,16 @@ class factura_view extends caja_view {
                         myWidget.closeLoading();
                         myWidget.alertDialog("Ha ocurrido un error, por favor intentelo de nuevo")
                     }
-                });
+                });                
+            }
+            
+            function appendItem(obj){
+                var tbody = $("#tbody-items-add");
+                var tr = $("<tr></tr>");
+                var td = $("<td></td>")
+                        .append("<input type='text'  >");
                 
+                tr.append(td);
             }
         </script>
         <?php
