@@ -1,9 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="2">
+        <file>
+            <url>modulos/caja/windows/factura/factura_view.php</url>
+            <bookmark id="1">
+                <name/>
+                <line>73</line>
+                <key/>
+            </bookmark>
+        </file>
+    </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/mynorbgo/Documents/GitHub/chocolateria_umg/core/db_mysql.php</file>
+            <file>file:/C:/Webserver/Proyectos/Mine/chocolateria_umg/index.php</file>
+            <file>file:/C:/Webserver/Proyectos/Mine/chocolateria_umg/modulos/login/login_model.php</file>
+            <file>file:/C:/Webserver/Proyectos/Mine/chocolateria_umg/core/global_controller.php</file>
+            <file>file:/C:/Webserver/Proyectos/Mine/chocolateria_umg/core/db_mysql.php</file>
+            <file>file:/C:/Webserver/Proyectos/Mine/chocolateria_umg/modulos/caja/windows/factura/factura_view.php</file>
+            <file>file:/C:/Webserver/Proyectos/Mine/chocolateria_umg/core/global_view.php</file>
+            <file>file:/C:/Webserver/Proyectos/Mine/chocolateria_umg/modulos/caja/caja_view.php</file>
+            <file>file:/C:/Webserver/Proyectos/Mine/chocolateria_umg/modulos/caja/windows/factura/factura_controller.php</file>
         </group>
     </open-files>
 </project-private>

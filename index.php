@@ -2,7 +2,7 @@
 date_default_timezone_set("America/Guatemala");
 session_start();
 $strAction = basename(__FILE__);
-error_reporting(0);
+//error_reporting(0);
 
 if((isset($_GET["act"])) && ($_GET["act"] == "lnk")){
     require_once("core/global_controller.php");

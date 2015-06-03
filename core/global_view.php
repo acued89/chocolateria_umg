@@ -160,7 +160,7 @@ class global_view{
                     ?>
                 </div>          
                 <div id="divglobal_load" style="display:none; background-color: white; color: black;">&nbsp;</div>
-                <div style="height: 50px;width: 100%"></div>
+                <div style="height: 75px;width: 100%"></div>
                 <div id="contentPage" class="Content"> 
                 
         <?php

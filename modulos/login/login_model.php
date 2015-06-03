@@ -26,22 +26,37 @@ class login_model extends global_model{
     }
 
     function llenar_session($strUser,$strPassword ){
-        
-        $jsonObject = json_decode(file_get_contents("http://umgsk8ertux.azurewebsites.net/Services/Credentials.svc/UserInformation/json/".$strUser."/".$strPassword));
-        $array = get_object_vars($jsonObject);
-        $_SESSION["wild"]["CountryName"] = $array['CountryName'];
-        $_SESSION["wild"]["IdCountry"] = $array['IdCountry'];
-        $_SESSION["wild"]["IdRole"] = $array['IdRole'];
-        $_SESSION["wild"]["RoleName"] = $array['RoleName'];
+        $link = "http://umgsk8ertux.azurewebsites.net/Services/Credentials.svc/UserInformation/json/".$strUser."/".$strPassword;
+        $exec = RestClient::get($link);
+        $array = json_decode($exec->getResponse());
+        $UserInfo = $array->{'UserInformationJsonResult'};
+        $_SESSION["wild"]["CountryName"] = $UserInfo->{'CountryName'};
+        $_SESSION["wild"]["IdCountry"] = $UserInfo->{'IdCountry'};
+        $_SESSION["wild"]["IdRole"] = $UserInfo->{'IdRole'};
+        $_SESSION["wild"]["RoleName"] = $UserInfo->{'RoleName'};
         $_SESSION["wild"]["UserName"] = $strUser;
         $_SESSION["wild"]["Password"] = $strPassword;
         $_SESSION["wild"]["tipo"] = "admin";
         $_SESSION["wild"]["logged"] = true;
         $_SESSION["wild"]["uid"] = 1;
-        $jsonObject = json_decode(file_get_contents("http://umgsk8ertux.azurewebsites.net/Services/Credentials.svc/Permissions/json/".$strUser."/".$strPassword));
-        $array = get_object_vars($jsonObject);
-        $_SESSION["wild"]["permisos"] = $array;
+        $link = "http://umgsk8ertux.azurewebsites.net/Services/Credentials.svc/Permissions/xml/$strUser/$strPassword";
+        $exec = RestClient::get($link);
+        $arrPermission = json_decode($exec->getResponse());        
+        $_SESSION["wild"]["permisos"] = $arrPermission;        
         
+        $link = "http://umgsk8ertux.azurewebsites.net/Services/WareHouses.svc/Get/json/0/0/null";
+        $exec = RestClient::get($link);
+        $arrBodegasPreview = json_decode($exec->getResponse());
+        $arrBodegas = array();
+        foreach($arrBodegasPreview->{"GetJsonResult"} AS $key => $value){
+            $arrBodegas[$value->{"IdWareHouse"}]["IdBranch"] = $value->{"IdBranch"};
+            $arrBodegas[$value->{"IdWareHouse"}]["IdWareHouse"] = $value->{"IdWareHouse"};
+            $arrBodegas[$value->{"IdWareHouse"}]["IsActive"] = $value->{"IsActive"};
+            $arrBodegas[$value->{"IdWareHouse"}]["Location"] = $value->{"Location"};
+            $arrBodegas[$value->{"IdWareHouse"}]["Name"] = $value->{"Name"};            
+            unset($key);unset($value);
+        }
+        $_SESSION["wild"]["bodegas"] = $arrBodegas;
         return true;
         
     }
